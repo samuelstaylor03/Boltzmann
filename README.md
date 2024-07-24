@@ -13,5 +13,6 @@
 
         ./<program_executable> <temperature_in_K> <seed>
 
+**Single File:** The directory single_file contains one source file that can be compiled individually and performs the same calculation as the program. It is simply all the modules moved to one singular main file. It is much less organized, but performs the same calculation and is easier to compile (see single_file/compile_instructions.txt).
 
 **Acknowledgements:** Kalman Varga, Cody Covington

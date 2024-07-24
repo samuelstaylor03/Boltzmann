@@ -535,15 +535,10 @@ SUBROUTINE initialize(input_filename)
 END SUBROUTINE
 
 
-SUBROUTINE calculate_atomic_velocities()
+SUBROUTINE calculate_atomic_velocities
   !This subroutine gives each atom (ion), which is allowed to move,
   !a random velocity in x,y,z directions according to the Maxwell-Boltzmann
   !distribution at certain temperature
-  !Input parameters:
-  !  temperature - temperature [in Kelvins]
-  !Output data:
-  !  v(1:3,1:N_total_atom) - an array where the random velocities are returned [in A/femtosec]
-  !,N_total_atom),temperature !NOTE TO SAM: THIS SHOULD ALREADY BE DEFINED AS SHOULD BE ALTERED
   integer :: i,ai,j,elem
   real(8) :: f1,f2,temp,av_kin,tot_kin
   
@@ -583,8 +578,6 @@ SUBROUTINE compute_atomic_temperature(temper,av_kin,tot_kin)
   !This subroutine computes the temperature, as well as the total
   !and average kinetic energies of ions. It only counts the ions
   !that are allowed to move.
-  !Input parameters:
-  !  v(1:3,1:N_total_atoms) - atomic (i.e. ionic) velocities
   !Output data is returned in three variables:
   !  temper -- temperature of ions [in K]
   !  av_kin -- average kinetic energy of ions, which is the basically
