@@ -1,4 +1,4 @@
-#Boltzmann
+# Boltzmann
 **Description:** Generates a velocity.inp file for Varga Group's TDDFT code. Uses the Boltzmann distribution to generate velocities for individual atoms given an initial temperature and seed.
 
 **Program Input:** The program expects three different inputs. The latter two can be given as command line arguments or runtime input after running the program with no arguments:
