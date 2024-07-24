@@ -1,0 +1,26 @@
+### INSTRUCTIONS ON HOW TO RUN THE PROGRAM ###
+
+On a linux machine (or WSL), ensure that gfortran and make are installed.
+If not use the commands:
+    $   apt install gfortran
+    $   apt install make
+
+from the home directory 'boltzmann', use the following command:
+    $   make
+This will create the 'release' directory which is where all of the object and mod files will be stored
+as well as the executable file 'main'
+
+Ensure that a dft.inp file is in the directory that you are in when you run the executable.
+For example, you can copy a dft.inp file from the input folder to the home directory and then run the executable from release
+EXAMPLE COMMANDS:
+    $   cp input/c2h2/dft.inp .
+    $   ./release/main 300 1
+
+If you want to clean-up and 'un-compile' the code: use either of the following commands:
+    $   make clean
+    $   make cleaner
+
+make clean will remove all the .o and .mod files as well as the executable
+make cleaner will remove the entire release folder
+
+

@@ -1,0 +1,8 @@
+To compile the the single file program:
+    gfortran main_single.f90 -o main_single
+
+To run the executable with command line arguments:
+    ./main_single <temperature in K> <random seed>
+
+To run with user-input mode:
+    ./main_single
