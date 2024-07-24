@@ -4,10 +4,11 @@
         
         dft.inp file: Must be in the same directory that you are in when you run the program. Needed in order to access the number of atoms, species, and positions of atoms in a molecule. 
         
-        Temperature (in Kelvin): Provide as a command line argument or as runtime input. Any real number
+        Temperature (in Kelvin): Provide as a command line argument or as runtime input. Any real number.
 
-        Seed: Provide as command line argument or as runtime input. Initial value used to generate random numbers for the Boltzmann distribution.
+        Seed: Provide as command line argument or as runtime input. Initial value used to generate random numbers for the Boltzmann distribution. Any Integer.
 
-**Running the Program:** The program must be compiled in order to create an executable. There are two methods of doing this: either via the Makefile or manually compiling and then linking each file. See the .txt files included in the 'instruction' directory.
+**Running the Program:** The program must be compiled in order to create an executable. There are two methods of doing this: either via the Makefile or manually compiling and then linking each file. See the .txt files included in the 'instruction' directory. Run with the following command: 
+        $        ./<program_executable> <temperature_in_K> <seed>
 
 **Acknowledgements:** Kalman Varga, Cody Covington
