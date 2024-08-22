@@ -4,3 +4,4 @@ add_proton_velocity = .TRUE.
 proton_x_velocity = 0.0
 proton_y_velocity = -0.5
 proton_z_velocity = 0.0
+print_info_to_terminal = .TRUE.

@@ -19,6 +19,9 @@ MODULE MOD_GLOBAL
   real*8 :: proton_x_velocity = 0.0
   real*8 :: proton_y_velocity = 0.0
   real*8 :: proton_z_velocity = 0.0
+  logical :: print_info_to_terminal = .FALSE.
+
+
 
 
   ! Command Arguments or user input

@@ -476,26 +476,26 @@ SUBROUTINE print_to_terminal
 END SUBROUTINE print_to_terminal
 
 SUBROUTINE write_velocity_to_file(output_filename)
-character(len=*), intent(in) :: output_filename
-integer :: i, unit_num, error_code
+  character(len=*), intent(in) :: output_filename
+  integer :: i, unit_num, error_code
 
-! Open the file
-unit_num = 20
-open(unit=unit_num, file=trim(adjustl(output_filename)), status='replace', action='write', iostat=error_code)
-if (error_code /= 0) then
-    print *, "Error opening file for writing"
-    stop
-end if
+  ! Open the file
+  unit_num = 20
+  open(unit=unit_num, file=trim(adjustl(output_filename)), status='replace', action='write', iostat=error_code)
+  if (error_code /= 0) then
+      print *, "Error opening file for writing"
+      stop
+  end if
 
-! Write velocities to the file
-do i = 1, N_total_atom
-    write(unit_num, *) atom_velocity(1, i), atom_velocity(2, i), atom_velocity(3, i)
-end do
+  ! Write velocities to the file
+  do i = 1, N_total_atom
+      write(unit_num, *) atom_velocity(1, i), atom_velocity(2, i), atom_velocity(3, i)
+  end do
 
-! Close the file
-close(unit_num)
+  ! Close the file
+  close(unit_num)
 
-print *, "Successfully wrote velocities to file: ", output_filename
+  write(*,'(A, I0, A, F8.3, A, A)') "r=", ion_velocity_init_seed, ", temp=", temperature_ions, ", output file: ", output_filename
 END SUBROUTINE write_velocity_to_file
 
 END MODULE MOD_IO

@@ -1,0 +1,9 @@
+### THIS IS THE CONTROL_BOLTZMANN.INP FILE FOR SUPERCOMPUTER ###
+
+dft_input_path=/scratch/group/p.phy240167.000/collision/C2H2/C2H2_gs/
+velocity_output_path=/scratch/group/p.phy240167.000/collision/C2H2/y_0.5_runs/r1/
+add_proton_velocity = .TRUE.
+proton_x_velocity = 0.0
+proton_y_velocity = -0.5
+proton_z_velocity = 0.0
+print_info_to_terminal = .FALSE.
