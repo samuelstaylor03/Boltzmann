@@ -226,7 +226,8 @@ SUBROUTINE write_velocity_to_file(output_filename)
   ! Close the file
   close(unit_num)
 
-  write(*,'(A,A,A,F8.2,A,I0)') "Finished. Output file: ",output_filename,", temp=",temperature_ions,", r=",ion_velocity_init_seed
+  write(*,'(A,A,A,F8.2,A,I0)') "Finished. Output: ", adjustl(trim(output_filename_full)), &
+                               ", temp=", temperature_ions, ", r=", ion_velocity_init_seed
 END SUBROUTINE write_velocity_to_file
 
 END MODULE MOD_IO
