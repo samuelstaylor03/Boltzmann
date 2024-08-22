@@ -9,6 +9,8 @@ MODULE PARAMETERS
     !where q is the elementary charge in SI units, q=1.602176487d-19
     real*8,parameter      :: mass_convfactor=1.66053886d0/1.602176487d-02
     real*8,parameter      :: k_Boltzmann=8.617343d-05 !in eV/Kelvin
+
+    integer,parameter :: control_file = 10
   
     ! Approximate masses of elements (number of nucleons in the most common isotope)
     real(8),parameter :: element_num_nucleons(N_elements)=(/ &

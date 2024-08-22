@@ -5,18 +5,92 @@ MODULE MOD_IO
 
 CONTAINS
 
+
+SUBROUTINE convert_to_lowercase(string)
+    integer          :: i
+    character(len=*) :: string
+    character        :: the_char
+  
+    do i=1,len(string)
+      the_char=string(i:i)
+      if((iachar(the_char)>=iachar("A")).AND.(iachar(the_char)<=iachar("Z"))) then
+        the_char=achar(iachar(the_char)+(iachar('a')-iachar('A')))
+      endif
+      string(i:i)=the_char
+    enddo
+  END SUBROUTINE convert_to_lowercase
+
+
+SUBROUTINE read_control_input_file(input_filename)
+    character(len=*), intent(in) :: input_filename
+    character*256 :: file_line, the_key, value_string
+    integer :: i, error_code
+  
+    ! Open the file
+    open(unit=control_file, file=trim(adjustl(input_filename)), status='old', action='read', iostat=error_code)
+    if (error_code /= 0) then
+        write(*,*) "***ERROR*** Error opening: ", input_filename
+        write(*,*) "***ERROR*** Ensure that ", input_filename, " is in your running directory"
+        stop 
+    end if
+  
+    do
+      read(control_file,'(a)',end=110)file_line
+  
+      ! Ignore anything on the line that appears after a #
+      i=index(file_line,'#')
+      if(i>0) then
+        file_line=file_line(1:i-1)
+      endif
+  
+      i=index(file_line,'=')
+      if(i==0) then
+        cycle
+      else
+        read(file_line(1:i-1),'(a)')the_key
+        read(file_line(i+1:),'(a)')value_string
+        call convert_to_lowercase(the_key)
+
+        select case(trim(adjustl(the_key)))
+          case("dft_input_path")
+            dft_input_path = trim(adjustl(value_string))            
+          case("velocity_output_path")
+            velocity_output_path = trim(adjustl(value_string))
+          case("add_proton_velocity")
+            read(value_string,*)add_proton_velocity
+          case("proton_x_velocity")
+            read(value_string,*)proton_x_velocity
+          case("proton_y_velocity")
+            read(value_string,*)proton_y_velocity
+          case("proton_z_velocity")
+            read(value_string,*)proton_z_velocity
+          case default
+            write(*,*)"ERROR: Invalid variable name: ",trim(adjustl(the_key))
+            stop 		   
+        end select
+      endif
+    enddo
+    110 close(control_file)
+  
+    
+END SUBROUTINE read_control_input_file
+
+
 SUBROUTINE read_input_file(input_filename)
     character(len=*), intent(in) :: input_filename
     integer :: i, error_code, atom_counter
     character(len=256) :: line
+    character(len=256) :: input_filename_full
     integer :: unit_num
+
+    input_filename_full = trim(adjustl(dft_input_path)) // trim(adjustl(input_filename))
 
     ! Open the file
     unit_num = 10
-    open(unit=unit_num, file=trim(adjustl(input_filename)), status='old', action='read', iostat=error_code)
+    open(unit=unit_num, file=trim(adjustl(input_filename_full)), status='old', action='read', iostat=error_code)
     if (error_code /= 0) then
-        print *, "Error opening dft.inp"
-        print *, "Ensure that dft.inp is in the same directory as the executable"
+        print *, "Error opening ", input_filename_full
+        print *, "Ensure that dft.inp is in the directory ", dft_input_path
         stop
     end if
 
@@ -39,7 +113,7 @@ SUBROUTINE read_input_file(input_filename)
         read(line, *, iostat=error_code) N_total_atom
         if (error_code == 0) exit
         if (error_code /= 0) then
-        print *, "Error reading N_total_atom"
+        print *, "Error reading N_total_atom from first line of ", input_filename, " file"
         stop
         end if
     end do
@@ -117,17 +191,24 @@ SUBROUTINE print_to_terminal
         write(*,*) atom_velocity(:,i)
     end do
 
+    if (add_proton_velocity) then
+        write(*,*) proton_x_velocity, proton_y_velocity, proton_z_velocity
+    endif
+
 END SUBROUTINE print_to_terminal
 
 SUBROUTINE write_velocity_to_file(output_filename)
     character(len=*), intent(in) :: output_filename
+    character(len=255) :: output_filename_full 
     integer :: i, unit_num, error_code
+
+    output_filename_full = trim(adjustl(velocity_output_path)) // trim(adjustl(output_filename))
 
     ! Open the file
     unit_num = 20
-    open(unit=unit_num, file=trim(adjustl(output_filename)), status='replace', action='write', iostat=error_code)
+    open(unit=unit_num, file=trim(adjustl(output_filename_full)), status='replace', action='write', iostat=error_code)
     if (error_code /= 0) then
-        print *, "Error opening file for writing"
+        print *, "Error opening velocity output file for writing"
         stop
     end if
 
@@ -136,10 +217,14 @@ SUBROUTINE write_velocity_to_file(output_filename)
         write(unit_num, *) atom_velocity(1, i), atom_velocity(2, i), atom_velocity(3, i)
     end do
 
+    if (add_proton_velocity) then
+        write(unit_num, *) proton_x_velocity, proton_y_velocity, proton_z_velocity
+    endif
+
     ! Close the file
     close(unit_num)
 
-    print *, "Successfully wrote velocities to file: ", output_filename
+    print *, "Successfully wrote velocities to file: ", output_filename_full
 END SUBROUTINE write_velocity_to_file
 
 END MODULE MOD_IO

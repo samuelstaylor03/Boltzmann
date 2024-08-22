@@ -7,8 +7,8 @@ PROGRAM MAIN
     USE BOLTZMANN
     implicit none
     
-    call initialize('dft.inp')
+    call initialize('control_boltzmann.inp')
     call calculate_atomic_velocities
     call print_to_terminal
-    call write_velocity_to_file('velocity.inp') 
+    call write_velocity_to_file('velocity.inp')
 END PROGRAM MAIN

@@ -15,8 +15,10 @@ SUBROUTINE initialize(input_filename)
   character(len=*), intent(in) :: input_filename
   character(256) :: temp_str, seed_str
 
-  call read_input_file(input_filename)
+  call read_control_input_file(input_filename)
 
+  call read_input_file('dft.inp')
+  
   ! Check command line arguments. If two are not given, then user must input from the terminal
   if (command_argument_count().NE.2) then
       write(*,*) '### USER-INPUT MODE ###'
