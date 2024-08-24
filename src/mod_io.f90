@@ -202,7 +202,7 @@ END SUBROUTINE print_to_terminal
 SUBROUTINE write_velocity_to_file(output_filename)
   character(len=*), intent(in) :: output_filename
   character(len=255) :: output_filename_full 
-  integer :: i, unit_num, error_code
+  integer :: i, unit_num, error_code, total_number_atoms
 
   output_filename_full = trim(adjustl(velocity_output_path)) // trim(adjustl(output_filename))
 
@@ -214,7 +214,13 @@ SUBROUTINE write_velocity_to_file(output_filename)
       stop
   end if
 
-  write(unit_num, *) N_total_atom
+  if (add_proton_velocity) then
+    total_number_atoms = N_total_atom + 1
+  else
+    total_number_atoms = N_total_atom
+  endif
+
+  write(unit_num, *) total_number_atoms
 
   ! Write velocities to the file
   do i = 1, N_total_atom
