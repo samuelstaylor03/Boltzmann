@@ -214,6 +214,8 @@ SUBROUTINE write_velocity_to_file(output_filename)
       stop
   end if
 
+  write(unit_num, *) N_total_atom
+
   ! Write velocities to the file
   do i = 1, N_total_atom
       write(unit_num, *) atom_velocity(1, i), atom_velocity(2, i), atom_velocity(3, i)
