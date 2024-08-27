@@ -74,6 +74,7 @@ SUBROUTINE read_control_input_file(input_filename)
   enddo
   110 close(control_file)
 
+  call check_and_fix_paths
     
 END SUBROUTINE read_control_input_file
 
@@ -120,8 +121,6 @@ SUBROUTINE read_input_file(input_filename)
       end if
   end do
 
-
-
   ! Allocate arrays based on N_total_atom
   allocate(atom_position(3, N_total_atom))
   allocate(atom_velocity(3, N_total_atom))
@@ -165,6 +164,29 @@ SUBROUTINE read_input_file(input_filename)
   ! Close the file
   110 close(unit_num)    
 END SUBROUTINE read_input_file
+
+
+SUBROUTINE check_and_fix_paths
+  ! Ensure dft_input_path and velocity_output_path start and end with '/'
+  if (len_trim(dft_input_path) > 0) then
+    if (dft_input_path(1:1) /= '/') then
+      dft_input_path = '/' // trim(adjustl(dft_input_path))
+    endif
+    if (dft_input_path(len_trim(dft_input_path):len_trim(dft_input_path)) /= '/') then
+      dft_input_path = trim(adjustl(dft_input_path)) // '/'
+    endif
+  endif
+
+  if (len_trim(velocity_output_path) > 0) then
+    if (velocity_output_path(1:1) /= '/') then
+      velocity_output_path = '/' // trim(adjustl(velocity_output_path))
+    endif
+    if (velocity_output_path(len_trim(velocity_output_path):len_trim(velocity_output_path)) /= '/') then
+      velocity_output_path = trim(adjustl(velocity_output_path)) // '/'
+    endif
+  endif
+END SUBROUTINE check_and_fix_paths
+
 
 SUBROUTINE input_user_terminal
   write(*,*) 'Enter the temperature of the molecule in Kelvin:'
