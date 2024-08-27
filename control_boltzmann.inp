@@ -1,4 +1,4 @@
-dft_input_path=mnt/c/Users/Samuel/Research/varga/fortran/Boltzmann/input/c2h2/
+dft_input_path=/mnt/c/Users/Samuel/Research/varga/fortran/Boltzmann/input/c2h2/
 velocity_output_path=/mnt/c/Users/Samuel/Research/varga/fortran/Boltzmann/output/
 add_proton_velocity = True
 proton_x_velocity = 0.0
